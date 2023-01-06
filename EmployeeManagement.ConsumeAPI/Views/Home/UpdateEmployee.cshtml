@@ -1,0 +1,95 @@
+﻿@model Employee
+
+@{
+    Layout = "_Layout"; ViewBag.Title = "Update a Reservation";
+}
+
+
+@if (ViewBag.Result == "Success")
+{
+
+    <br />
+    <h6>Employee was updated successfully as below:</h6>
+
+    @if (Model != null)
+    {
+        <br />
+        <div class="row col-md-4">
+            <div class="col-md-6">Employee Id:</div> <div class="col-md-6"> @Model.EmployeeId</div>
+            <div class="col-md-6">First Name:</div> <div class="col-md-6"> @Model.FirstName</div>
+            <div class="col-md-6">Last Name:</div> <div class="col-md-6"> @Model.LastName</div>
+            <div class="col-md-6">Email:</div> <div class="col-md-6"> @Model.Email</div>
+            <div class="col-md-6">Date of Birth:</div> <div class="col-md-6"> @Model.DateOfBrith</div>
+            <div class="col-md-6">Gender:</div> <div class="col-md-6"> @Model.Gender</div>
+            <div class="col-md-6">Department Id:</div> <div class="col-md-6"> @Model.DepartmentId</div>
+            <div class="col-md-6">Photo Path:</div> <div class="col-md-6"> @Model.PhotoPath</div>
+
+        </div>
+    }
+    <br />
+    <h2><a asp-action="Index" class="btn btn-sm btn-primary">Back to List</a></h2>
+
+}
+else if  (ViewBag.Result == "Failed")
+{
+    <br />
+    <h2>Something went wrong!</h2>
+    <br />
+    <div>@ViewBag.StatusCode;</div>
+}
+else
+{
+<h2>Update Employee: </h2>
+<br />
+
+<div class="col-md-4">
+        <form method="post" id="employeeForm" asp-action="UpdateEmployee">
+
+        <div class="form-group">
+            <label asp-for="EmployeeId"></label>
+            <input class="form-control" asp-for="EmployeeId"  readonly />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FirstName">First Name:</label>
+            <input class="form-control" asp-for="FirstName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName">Last Name:</label>
+            <input class="form-control" asp-for="LastName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Email">Email:</label>
+            <input class="form-control" asp-for="Email" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DateOfBrith">Date of Birth:</label>
+            <input class="form-control" asp-for="DateOfBrith" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Gender">Gender:</label>
+            <input class="form-control" asp-for="Gender" />
+        </div>
+        <div class="form-group">
+            <label asp-for="DepartmentId">Department:</label>
+            <input class="form-control" asp-for="DepartmentId" />
+        </div>
+        <div class="form-group">
+            <label asp-for="PhotoPath">Photo Path:</label>
+            <input class="form-control" asp-for="PhotoPath" />
+        </div>
+        <br />
+        <div class="form-group row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+            </div>
+            <div class="col-md-6" style="text-align:right">
+                <h2><a asp-action="Index" class="btn btn-sm btn-secondary">Back To List</a></h2>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+}

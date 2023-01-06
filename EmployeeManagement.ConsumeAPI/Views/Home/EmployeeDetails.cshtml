@@ -1,0 +1,28 @@
+﻿@model Employee
+@{
+    Layout = "_Layout"; ViewBag.Title = "Employee details.";
+}
+
+
+
+
+@if (Model != null)
+{
+    <h2>Employee Details:</h2>
+
+    <br />
+    <div class = "row col-md-4">
+        <div class="col-md-6">Employee Id:</div> <div class="col-md-6"> @Model.EmployeeId</div>
+        <div class="col-md-6">First Name:</div> <div class="col-md-6"> @Model.FirstName</div>
+        <div class="col-md-6">Last Name:</div> <div class="col-md-6"> @Model.LastName</div>
+        <div class="col-md-6">Email:</div> <div class="col-md-6"> @Model.Email</div>
+        <div class="col-md-6">Date of Birth:</div> <div class="col-md-6"> @Model.DateOfBrith</div>
+        <div class="col-md-6">Gender:</div> <div class="col-md-6"> @Model.Gender</div>
+        <div class="col-md-6">Department Id:</div> <div class="col-md-6"> @Model.DepartmentId</div>
+        <div class="col-md-6">Photo Path:</div> <div class="col-md-6"> @Model.PhotoPath</div>
+
+    </div>
+}
+
+<br />
+<h2><a asp-action="Index" class="btn btn-sm btn-primary">Back to List</a></h2>

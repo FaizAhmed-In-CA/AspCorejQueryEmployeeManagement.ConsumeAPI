@@ -1,0 +1,120 @@
+﻿@model Employee
+@{
+    Layout = "_Layout"; ViewBag.Title = "Add a Employee";
+}
+
+
+<h2>Enter Employee Info:</h2>
+
+<br />
+<div class="col-md-4">
+
+    @*<form asp-action="AddEmployee" method="post">*@
+
+        <div class="form-group">
+            <label for="FirstName">First Name:</label>
+            <input class="form-control" id="FirstName" />
+        </div>
+        <div class="form-group">
+            <label for="LastName">Last Name:</label>
+            <input class="form-control" id="LastName" />
+        </div>
+        <div class="form-group">
+            <label for="Email">Email:</label>
+            <input class="form-control" id="Email" />
+        </div>
+
+        <div class="form-group">
+            <label for="DateOfBrith">Date of Birth:</label>
+            <input class="form-control" id="DateOfBrith" />
+        </div>
+        <div class="form-group">
+            <label for="Gender">Gender:</label>
+            <input class="form-control" id="Gender" />
+        </div>
+        <div class="form-group">
+            <label for="DepartmentId">Department:</label>
+            <input class="form-control" id="DepartmentId" />
+        </div>
+        <div class="form-group">
+            <label for="PhotoPath">Photo Path:</label>
+            <input class="form-control" id="PhotoPath" />
+        </div>
+        <br />
+        <div class="form-group row">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-sm btn-primary" id="AddButton">Add</button>
+            </div>
+            <div class="col-md-6" style="text-align:right">
+                <h2><a asp-action="AllEmployees" asp-controller="ConsumeByjQuery" class="btn btn-sm btn-secondary">Employee List</a></h2>
+            </div>
+        </div>
+    @*</form>*@
+
+</div>
+
+
+<div style="display:none" id="resultDiv">
+    <h2>Added Employee:</h2>
+
+    <br />
+    <div class="row col-md-4">
+        <div class="col-md-6">Employee Id:</div> <div class="col-md-6" id="idDiv"></div>
+        <div class="col-md-6">First Name:</div> <div class="col-md-6" id="firstNameDiv"></div>
+        <div class="col-md-6">Last Name:</div> <div class="col-md-6" id="lastNameDiv"></div>
+        <div class="col-md-6">Email:</div> <div class="col-md-6" id="emailDiv"></div>
+        <div class="col-md-6">Date of Birth:</div> <div class="col-md-6" id="dobDiv"></div>
+        <div class="col-md-6">Gender:</div> <div class="col-md-6" id="genderDiv"></div>
+        <div class="col-md-6">Department Id:</div> <div class="col-md-6" id="deptIdDiv"></div>
+        <div class="col-md-6">Photo Path:</div> <div class="col-md-6" id="photoPathDiv"></div>
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $("#AddButton").on('click', function (e) {
+        
+       // alert("About to call...");
+        
+        $.ajax({
+            url: "https://localhost:44354/api/employees",
+            type: "post",
+            contentType: "application/json",
+            data: JSON.stringify({
+                FirstName: $("#FirstName").val(),
+                LastName: $("#LastName").val(),
+                Email: $("#Email").val(),
+                DateOfBrith: $("#DateOfBrith").val(),
+                Gender: $("#Gender").val(),
+                DepartmentId: $("#DepartmentId").val(),
+                PhotoPath: $("#PhotoPath").val()
+            }),
+            success: function (result, status, xhr) {
+                
+                //alert("I am in success...");
+                
+                //var str = "<tr><td>" + result["id"] + "</td><td>" + result["name"] + "</td><td>" + result["startLocation"] + "</td><td>" + result[
+                //    $("table tbody").append(str);
+
+                $("#idDiv").append(result.employeeId)
+                $("#firstNameDiv").append(result.firstName)
+                $("#lastNameDiv").append(result.lastName)
+                $("#emailDiv").append(result.email)
+                $("#dobDiv").append(result.dateOfBrith)
+                $("#genderDiv").append(result.gender)
+                $("#deptIdDiv").append(result.departmentId)
+                $("#photoPathDiv").append(result.photoPath)
+
+                $("#resultDiv").show();
+            },
+            error: function (xhr, status, error) {
+
+                //alert("I am in error...");
+                console.log(xhr)
+            }
+        });
+    });
+
+</script>

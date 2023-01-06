@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "_Layout"; ViewBag.Title = "Employee Details";
+}
+
+<div style="display:none" id="resultDiv">
+
+    <br />
+
+    <h6>Employee Details:</h6>
+
+    <br />
+    <div class="row col-md-4">
+        <div class="col-md-6">Employee Id:</div> <div class="col-md-6" id="idDiv"></div>
+        <div class="col-md-6">First Name:</div> <div class="col-md-6" id="firstNameDiv"></div>
+        <div class="col-md-6">Last Name:</div> <div class="col-md-6" id="lastNameDiv"></div>
+        <div class="col-md-6">Email:</div> <div class="col-md-6" id="emailDiv"></div>
+        <div class="col-md-6">Date of Birth:</div> <div class="col-md-6" id="dobDiv"></div>
+        <div class="col-md-6">Gender:</div> <div class="col-md-6" id="genderDiv"></div>
+        <div class="col-md-6">Department Id:</div> <div class="col-md-6" id="deptIdDiv"></div>
+        <div class="col-md-6">Photo Path:</div> <div class="col-md-6" id="photoPathDiv"></div>
+
+    </div>
+
+    <br />
+
+    <div class="col-md-6" style="text-align:left">
+        <h2><a asp-action="AllEmployees" asp-controller="ConsumeByjQuery" class="btn btn-sm btn-secondary">Got to Employee List</a></h2>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(
+
+        function () {
+            alert("I am in document ready...");
+            GetEmployee();
+
+        }
+
+    )
+
+    function GetEmployee() {
+
+        alert("I am in get employee...");
+        let params = (new URL(document.location)).searchParams;
+        let id = params.get("id");
+
+        alert("The id is: " + id);
+
+        $.ajax({
+            url: "https://localhost:44354/api/employees/" + id,
+            type: "get",
+            contentType: "application/json",
+            success: function (result, status, xhr) {
+                alert("I am in success...");
+
+                $("#idDiv").append(result.employeeId)
+                $("#firstNameDiv").append(result.firstName)
+                $("#lastNameDiv").append(result.lastName)
+                $("#emailDiv").append(result.email)
+                $("#dobDiv").append(result.dateOfBrith)
+                $("#genderDiv").append(result.gender)
+                $("#deptIdDiv").append(result.departmentId)
+                $("#photoPathDiv").append(result.photoPath)
+
+                $("#resultDiv").show();
+            },
+            error: function (xhr, status, error) {
+                alert("I am in error...");
+                console.log(xhr)
+            }
+        });
+    }
+
+</script>

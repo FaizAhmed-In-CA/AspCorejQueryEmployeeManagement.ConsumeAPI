@@ -1,0 +1,126 @@
+﻿@{
+    Layout = "_Layout"; ViewBag.Title = "All Employees";
+}
+
+
+<table class="table table-sm table-striped table-bordered m-2" id="table1">
+    <thead>
+        <tr>
+            <th style="text-align:center">Employee ID</th>
+            <th style="text-align:center">First Name</th>
+            <th style="text-align:center">Last Name</th>
+            <th style="text-align:center">Email</th>
+            <th style="text-align:center">Gender</th>
+              <th style="text-align:center">Actions</th>
+@*            <th style="text-align:center">Delete</th>
+            <th style="text-align:center">Details</th>*@
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<br />
+
+<a asp-action="AddEmployeejQ" class="btn btn-sm btn-primary">Add Employee(jQ)</a>
+
+<a asp-action="AddFilejQ" class="btn btn-sm btn-primary">Test File Uploading(JQ)</a>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        ShowAllEmployees();
+
+        $("table").on("click", "img.delete", function () {
+            var reservationId = $(this).parents("tr").find("td:nth-child(1)").text();
+
+            $.ajax({
+                url: "https://localhost:44324/api/Reservation/" + reservationId,
+                type: "delete",
+                contentType: "application/json",
+                success: function (result, status, xhr) {
+                    ShowAllReservation();
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                }
+            });
+        });
+
+    });
+
+    function ShowAllEmployees() {
+        $("table tbody").html("");
+        $.ajax({
+            url: "https://localhost:44354/api/employees",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result, status, xhr) {
+                //alert("I am in success...");
+                $.each(result, function (index, value) {
+                    //alert("Employee Id: " + value.employeeId);
+                    $("tbody").append($("<tr>"));
+                    appendElement = $("tbody tr").last(); 
+                    appendElement.append($("<td style=\"vertical-align: middle; text-align: center;\">").html(value["employeeId"]));
+                    appendElement.append($("<td style=\"vertical-align: middle; text-align: center;\">").html(value["firstName"]));
+                    appendElement.append($("<td style=\"vertical-align: middle; text-align: center;\">").html(value["lastName"]));
+                    appendElement.append($("<td style=\"vertical-align: middle; text-align: center;\">").html(value["email"]));
+                    appendElement.append($("<td style=\"vertical-align: middle; text-align: center;\">").html(value["gender"]));
+                    //appendElement.append($("<td>").html("Click here"));
+
+                    //appendElement.append($("<td>").html("<a href=\"UpdateEmployeejQ/" + value["employeeId"] + "\"><img src=\"images/updateImage.jpg\" /></a>"));
+                    //appendElement.append($("<td>").html("<a href=\"ConsumeByjQuery/UpdateEmployeejQ/" + value["employeeId"] + "\">Update</a>" + "<br/><a href=\"ConsumeByjQuery/DeleteEmployeejQ/" + value["employeeId"] + "\">Delete</a>" + "<br/><a href=\"ConsumeByjQuery/GetEmployeejQDetails/" + value["employeeId"] + "\">Details</a>"));
+
+                    appendElement.append($("<td>").html("<a href=\"ConsumeByjQuery/UpdateEmployeejQ?id=" + value["employeeId"] + "\">Update</a>" + "<br/><a href=\"javascript:javascript:void(0)\" onClick=\"javascript:DeleteFunction(" + value["employeeId"] + ")\">Delete</a>" + "<br/><a href=\"ConsumeByjQuery/GetEmployeeDetailsJQ?id=" + value["employeeId"] + "\">Details</a>"));
+
+                    
+                    
+                    //appendElement.append($("<td>").html("<a href=\"DeleteEmployeejQ/" + value["employeeId"] + "\">Delete</a>"));
+                    //appendElement.append($("<td>").html("<a href=\"GetEmployeejQDetails/" + value["employeeId"] + "\">Details</a>"));
+
+                    //appendElement.append($("<td>").html("<img class=\"delete\" src=\"icon/close.png\" />"));
+
+                    //var tableString = "";
+                    //$.each(result, function (index, value) {
+                    //    tableString += "<tr><td>" + value.EmployeeId + "</td><td>" + value.FirstName + "</td><td>" + value.LastName + "</td><td>" + value.Email + "</td><td>" + value.Gender + "</td></tr>";
+                    //});
+                    //$("#table1").append(tableString);
+                
+                
+                
+                });
+            },
+            error: function (xhr, status, error) {
+                alert("I am in error...");
+                var acc = []
+                $.each(xhr, function (index, value) {
+                    acc.push(index + ': ' + value);
+                });
+                alert(JSON.stringify(acc));
+            }
+        });
+    }
+
+    function DeleteFunction(employeeId)
+    {
+        //alert("I am in DeleteFunction...and employeeId is: " + employeeId);
+        $.ajax({
+            url: "https://localhost:44354/api/employees/" + employeeId,
+            type: "delete",
+            contentType: "application/json",
+            success: function (result, status, xhr) {
+               // alert("I am in success...");
+                ShowAllEmployees();
+            },
+            error: function (xhr, status, error) {
+               // alert("I am in error...");
+                console.log(xhr)
+            }
+        });
+
+    }
+
+
+</script>

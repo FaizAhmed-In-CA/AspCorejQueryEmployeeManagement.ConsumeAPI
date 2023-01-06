@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Content_NoNeed\**" />
+    <Compile Remove="wwwroot\css_NoNeed\**" />
+    <Compile Remove="wwwroot\js_NoNeed\**" />
+    <Compile Remove="wwwroot\Scripts_NoNeed\**" />
+    <Content Remove="wwwroot\Content_NoNeed\**" />
+    <Content Remove="wwwroot\css_NoNeed\**" />
+    <Content Remove="wwwroot\js_NoNeed\**" />
+    <Content Remove="wwwroot\Scripts_NoNeed\**" />
+    <EmbeddedResource Remove="wwwroot\Content_NoNeed\**" />
+    <EmbeddedResource Remove="wwwroot\css_NoNeed\**" />
+    <EmbeddedResource Remove="wwwroot\js_NoNeed\**" />
+    <EmbeddedResource Remove="wwwroot\Scripts_NoNeed\**" />
+    <None Remove="wwwroot\Content_NoNeed\**" />
+    <None Remove="wwwroot\css_NoNeed\**" />
+    <None Remove="wwwroot\js_NoNeed\**" />
+    <None Remove="wwwroot\Scripts_NoNeed\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.12" />
+  </ItemGroup>
+
+</Project>
